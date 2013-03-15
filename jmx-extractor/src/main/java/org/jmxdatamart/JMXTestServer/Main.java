@@ -47,28 +47,39 @@ public class Main {
         tb1.setB(new Integer(-1));
         ObjectName tbName1 = new ObjectName("com.personal.JMXTestServer:name=TestBean1");
         
-        TestBean tb2 = new TestBean();
-        tb2.setA(new Integer(55));
-        tb2.setB(new Integer(-99));
-        ObjectName tbName2 = new ObjectName("com.personal.JMXTestServer:name=TestBean2");
-        
         CarBean cb = new CarBean();
         ObjectName cbName = new ObjectName("org.jmxdatamart:name=CarBean");
         
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         mbs.registerMBean(tb1, tbName1);
         mbs.registerMBean(cb, cbName);
-        mbs.registerMBean(tb2, tbName2);
         
-        if (args.length == 0) {
+        System.out.println("Simple MBean's a value = ");
+        tb1.setA(Integer.valueOf(System.console().readLine()));
+        
+        System.out.println("Simple MBean's b value = ");
+        tb1.setB(Long.valueOf(System.console().readLine()));
+        
+        System.out.println("MXBean's car name = ");
+        cb.setCarName(System.console().readLine());
+        
+        System.out.println("MXBean's car show = ");
+        cb.setCarAutoShow(System.console().readLine());
+        
+        System.out.println("MXBean's car engine = ");
+        cb.setCarEngine(Integer.valueOf(System.console().readLine()));
+        
+        System.out.println("MXBean's car power = ");
+        cb.setCarPower(Integer.valueOf(System.console().readLine()));
+        
+//        if (args.length == 0) {
           System.out.println("Press Enter to terminate...");
           System.in.read();
-        } else {  // a random argument will cause it to pause for 10s only
-          Thread.sleep(10000);
-        }
+//        } else {  // a random argument will cause it to pause for 10s only
+//          Thread.sleep(10000);
+//        }
         
         mbs.unregisterMBean(tbName1);
-        mbs.unregisterMBean(tbName2);
         mbs.unregisterMBean(cbName);
     }
 }
